@@ -1,0 +1,268 @@
+:root {
+  --bg: #e8efee;
+  --panel: #f6faf9;
+  --ink: #10302f;
+  --muted: #5d7a78;
+  --line: #c3d3d1;
+  --accent: #e8590c;
+  --accent-ink: #ffffff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1b1a;
+    --panel: #132726;
+    --ink: #e3f1ef;
+    --muted: #8fb0ad;
+    --line: #274443;
+    --accent: #ff7a30;
+    --accent-ink: #1a0d03;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Outfit", system-ui, sans-serif;
+}
+main {
+  width: 100%;
+  max-width: 380px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 20px 24px 24px;
+}
+
+/* Tabs */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.tabs button {
+  border: 0;
+  padding: 10px 0;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.tabs button[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--panel);
+}
+
+/* Dial */
+.dial { position: relative; width: 100%; margin: 0 auto; aspect-ratio: 5 / 3; }
+.dial svg { width: 100%; height: 100%; }
+.track, .sweep { fill: none; stroke-width: 8; }
+.track { stroke: var(--line); }
+.sweep { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; }
+.readout { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+#time {
+  font-family: "Azeret Mono", ui-monospace, monospace;
+  font-weight: 600;
+  font-size: clamp(2.1rem, 12vw, 3rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+#time.done { color: var(--accent); animation: blink 0.8s steps(2, start) infinite; }
+@keyframes blink { to { opacity: 0.25; } }
+#status { margin-top: 4px; font-size: 0.9rem; color: var(--muted); }
+
+/* Timer setup */
+.setup { display: grid; justify-items: center; gap: 10px; margin-top: 20px; color: var(--muted); }
+.fields { display: flex; gap: 10px; }
+.field { display: grid; justify-items: center; gap: 4px; font-size: 0.85rem; }
+.field input {
+  width: 4.6rem;
+  padding: 10px 6px;
+  font-family: "Azeret Mono", ui-monospace, monospace;
+  font-size: 1.15rem;
+  text-align: center;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.field input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.field input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Buttons */
+.controls { display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px; margin-top: 24px; }
+button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 14px 0;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+button:active { transform: scale(0.97); }
+button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.wide { width: 100%; margin-top: 12px; }
+
+/* Laps */
+#laps { list-style: none; margin: 20px 0 0; padding: 0; max-height: 220px; overflow-y: auto; }
+#laps li {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 1fr;
+  gap: 8px;
+  padding: 10px 4px;
+  border-top: 1px solid var(--line);
+  font-family: "Azeret Mono", ui-monospace, monospace;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+#laps li span:first-child,
+#laps li span:last-child { color: var(--muted); }
+#laps li span:last-child { text-align: right; }
+
+.hint { margin: 16px 0 0; text-align: center; font-size: 0.8rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+  #time.done { animation: none; }
+}
+
+/* From Uiverse.io by sunn_2633 */
+.cyber-pattern {
+  width: 100%;
+  height: 100%;
+  background-color: #050505; /* Fond presque noir */
+
+  /* C'est ici que la magie opère. On empile plusieurs couches : */
+  background-image: 
+    /* 1. La Vignette (Ombre sur les bords pour l'effet cinéma) */
+    radial-gradient(circle at center, transparent 30%, #000 90%),
+    /* 2. GRILLE PRINCIPALE (Cyan - Grande) - Lignes Verticales & Horizontales */
+      linear-gradient(rgba(3, 233, 244, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(3, 233, 244, 0.1) 1px, transparent 1px),
+    /* 3. GRILLE SECONDAIRE (Magenta - Petite) - Lignes Verticales & Horizontales */
+      linear-gradient(rgba(217, 3, 244, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 3, 244, 0.05) 1px, transparent 1px);
+
+  /* On définit la taille des grilles */
+  background-size:
+    100% 100%,
+    /* Vignette */ 60px 60px,
+    /* Grande grille Cyan (60px) */ 60px 60px,
+    20px 20px,
+    /* Petite grille Magenta (20px) */ 20px 20px;
+
+  /* On lance l'animation */
+  animation: cyber-move 10s linear infinite;
+}
+
+/* L'animation qui fait bouger les grilles */
+@keyframes cyber-move {
+  0% {
+    background-position:
+      0 0,
+      /* Vignette (ne bouge pas) */ 0 0,
+      0 0,
+      /* Grille Cyan (Départ) */ 0 0,
+      0 0; /* Grille Magenta (Départ) */
+  }
+  100% {
+    background-position:
+      0 0,
+      /* Vignette */ 60px 60px,
+      60px 60px,
+      /* Grille Cyan bouge de 60px (1 carreau) */ 40px 40px,
+      40px 40px; /* Grille Magenta bouge de 40px (plus vite/décalé) */
+  }
+}
+
+/* Keeps the animated background fixed behind the stopwatch */
+.cyber-pattern { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .cyber-pattern { animation: none; } }
+
+/* Same grid effect inside the stopwatch panel */
+main {
+  isolation: isolate;
+  --panel: #132726;
+  --ink: #e3f1ef;
+  --muted: #8fb0ad;
+  --line: #274443;
+  --accent: #ff7a30;
+  --accent-ink: #1a0d03;
+  color-scheme: dark;
+}
+.panel-pattern { position: absolute; inset: 0; z-index: -1; border-radius: 27px; }
+main { position: relative; }
+
+/* Button effect (based on Uiverse.io by barisdogansutcu): colours stay as they were,
+   buttons are slightly faded at rest and glow on hover */
+:is(.controls button, .wide) {
+  --glow: rgba(227, 241, 239, 0.35);
+  padding: 17px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  transition: all 0.5s ease;
+}
+.controls .primary { --glow: rgba(255, 122, 48, 0.65); }
+
+:is(.controls button, .wide):not(:disabled) { opacity: 0.75; }
+
+:is(.controls button, .wide):not(:disabled):hover {
+  opacity: 1;
+  letter-spacing: 3px;
+  box-shadow: 0 7px 29px 0 var(--glow);
+}
+
+:is(.controls button, .wide):not(:disabled):active {
+  opacity: 1;
+  letter-spacing: 3px;
+  box-shadow: 0 0 0 0 var(--glow);
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
+:is(.controls button, .wide):disabled { cursor: not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.controls button, .wide) { transition: none; }
+  :is(.controls button, .wide):not(:disabled):active { transform: none; }
+}
+
+/* Tab hover transition (based on Uiverse.io by cssbuttons-io): a circle grows from the centre.
+   Tab colours are unchanged; the circle uses the existing muted tone. */
+.tabs button { position: relative; overflow: hidden; }
+.tabs .label { position: relative; top: -1px; }
+.tabs .transition {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background-color: var(--muted);
+  opacity: 0.3;
+  border-radius: 9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.tabs button:hover .transition { width: 14em; height: 14em; }
+@media (prefers-reduced-motion: reduce) { .tabs .transition { transition: none; } }

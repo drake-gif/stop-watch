@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stopwatch &amp; Timer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;600&family=Outfit:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="cyber-pattern" aria-hidden="true"></div>
+<main>
+  <div class="cyber-pattern panel-pattern" aria-hidden="true"></div>
+  <div class="tabs" role="tablist">
+    <button id="tab-sw" role="tab" aria-selected="true"><span class="transition" aria-hidden="true"></span><span class="label">Stopwatch</span></button>
+    <button id="tab-tm" role="tab" aria-selected="false"><span class="transition" aria-hidden="true"></span><span class="label">Timer</span></button>
+  </div>
+
+  <div class="dial">
+    <svg viewBox="0 0 300 180" aria-hidden="true">
+      <path class="track" d="M150 4 H268 A28 28 0 0 1 296 32 V148 A28 28 0 0 1 268 176 H32 A28 28 0 0 1 4 148 V32 A28 28 0 0 1 32 4 Z" pathLength="100"/>
+      <path class="sweep" id="sweep" d="M150 4 H268 A28 28 0 0 1 296 32 V148 A28 28 0 0 1 268 176 H32 A28 28 0 0 1 4 148 V32 A28 28 0 0 1 32 4 Z" pathLength="100"/>
+    </svg>
+    <div class="readout" role="timer" aria-live="off">
+      <div id="time">00:00</div>
+      <div id="status">Ready</div>
+    </div>
+  </div>
+
+  <div id="setup" class="setup" hidden>
+    <span class="caption" id="setup-caption">Count down from</span>
+    <div class="fields" role="group" aria-labelledby="setup-caption">
+      <label class="field"><input id="hours" type="number" min="0" max="99" step="1" value="0" inputmode="numeric"><span>hours</span></label>
+      <label class="field"><input id="minutes" type="number" min="0" step="1" value="5" inputmode="numeric"><span>minutes</span></label>
+      <label class="field"><input id="seconds" type="number" min="0" step="1" value="0" inputmode="numeric"><span>seconds</span></label>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="reset" disabled>Reset</button>
+    <button id="toggle" class="primary">Start</button>
+  </div>
+  <button id="lap" class="wide" disabled>Lap</button>
+
+  <ol id="laps"></ol>
+  <p class="hint" id="hint">Keyboard: Space start/pause · L lap · R reset</p>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
